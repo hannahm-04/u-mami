@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  ADMIN
+  PELAYAN
+  KASIR
+  KOKI
+  PEMILIK
+}
+
+enum StatusStok {
+  TERSEDIA
+  HABIS
+}
+
+enum StatusMeja {
+  KOSONG
+  TERISI
+}
+
+enum StatusAntrean {
+  MENUNGGU
+  DIPANGGIL
+  SELESAI
+  DIBATALKAN
+}
+
+enum StatusPesanan {
+  DIPROSES
+  SELESAI
+  TERSAJI
+}
+
+enum MetodePembayaran {
+  CASH
+  QRIS
+  DEBIT
+}
+
+model Pengguna {
+  id_user      String       @id @default(cuid())
+  username     String       @unique
+  password     String
+  nama_lengkap String
+  role         Role
+  pembayaran   Pembayaran[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Kategori {
+  id_kategori   String   @id @default(cuid())
+  nama_kategori String
+  menu          Menu[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Menu {
+  id_menu        String           @id @default(cuid())
+  nama_menu      String
+  kategori_id    String
+  kategori       Kategori         @relation(fields: [kategori_id], references: [id_kategori])
+  harga          Int
+  status_stok    StatusStok       @default(TERSEDIA)
+  detail_pesanan Detail_Pesanan[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model Meja {
+  id_meja     String     @id @default(cuid())
+  no_meja     String     @unique
+  kapasitas   Int
+  status_meja StatusMeja @default(KOSONG)
+  pesanan     Pesanan[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Antrean {
+  id_antrean       String        @id @default(cuid())
+  nama_pelanggan   String
+  jumlah_orang     Int
+  waktu_kedatangan DateTime      @default(now())
+  status_antrean   StatusAntrean @default(MENUNGGU)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model Pesanan {
+  id_pesanan     String           @id @default(cuid())
+  meja_id        String
+  meja           Meja             @relation(fields: [meja_id], references: [id_meja])
+  total_harga    Int              @default(0)
+  status_pesanan StatusPesanan    @default(DIPROSES)
+  waktu_pesan    DateTime         @default(now())
+  detail_pesanan Detail_Pesanan[]
+  pembayaran     Pembayaran?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model Detail_Pesanan {
+  id_detail   String   @id @default(cuid())
+  pesanan_id  String
+  pesanan     Pesanan  @relation(fields: [pesanan_id], references: [id_pesanan])
+  menu_id     String
+  menu        Menu     @relation(fields: [menu_id], references: [id_menu])
+  jml_pesanan Int
+  subtotal    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Pembayaran {
+  id_pembayaran     String           @id @default(cuid())
+  user_id           String
+  user              Pengguna         @relation(fields: [user_id], references: [id_user])
+  pesanan_id        String           @unique
+  pesanan           Pesanan          @relation(fields: [pesanan_id], references: [id_pesanan])
+  metode_pembayaran MetodePembayaran
+  nominal           Int
+  waktu_bayar       DateTime         @default(now())
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
