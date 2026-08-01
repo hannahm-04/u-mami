@@ -158,9 +158,9 @@ Kerjakan berurutan. Satu tahap = satu sesi/prompt fokus ke AI. Jangan lompat tah
 
 **Tujuan:** Modul 3 selesai.
 
-- [ ] Tampilan status meja
-- [ ] Form input antrean
-- [ ] Update status antrean
+- [x] Tampilan status meja
+- [x] Form input antrean
+- [x] Update status antrean
       **Konteks ke AI:** Modul 3 + tabel `Meja`, `Antrean`.
       **Test:** simulasikan alur pelanggan datang → antre → dapat meja.
 

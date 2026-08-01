@@ -16,7 +16,7 @@ export async function createKategori(formData: FormData) {
   revalidatePath("/admin/kategori");
 }
 
-export async function deleteKategori(id: number) {
+export async function deleteKategori(id: string) {
   await db.kategori.delete({ where: { id_kategori: id } });
   revalidatePath("/admin/kategori");
 }
@@ -29,16 +29,16 @@ export async function getMenu() {
 export async function createMenu(formData: FormData) {
   const nama = formData.get("nama") as string;
   const harga = parseInt(formData.get("harga") as string);
-  const deskripsi = formData.get("deskripsi") as string;
-  const id_kategori = parseInt(formData.get("id_kategori") as string);
+  const deskripsi = formData.get("deskripsi") as string || "";
+  const id_kategori = formData.get("id_kategori") as string;
   
   await db.menu.create({
-    data: { nama_menu: nama, harga, deskripsi, id_kategori },
+    data: { nama_menu: nama, harga, deskripsi, kategori_id: id_kategori },
   });
   revalidatePath("/admin/menu");
 }
 
-export async function toggleStokMenu(id_menu: number, current_status: string) {
+export async function toggleStokMenu(id_menu: string, current_status: string) {
   const newStatus = current_status === "TERSEDIA" ? "HABIS" : "TERSEDIA";
   await db.menu.update({
     where: { id_menu },
@@ -47,7 +47,7 @@ export async function toggleStokMenu(id_menu: number, current_status: string) {
   revalidatePath("/admin/menu");
 }
 
-export async function deleteMenu(id: number) {
+export async function deleteMenu(id: string) {
   await db.menu.delete({ where: { id_menu: id } });
   revalidatePath("/admin/menu");
 }
@@ -58,16 +58,16 @@ export async function getMeja() {
 }
 
 export async function createMeja(formData: FormData) {
-  const nomor = parseInt(formData.get("nomor") as string);
+  const nomor = formData.get("nomor") as string;
   const kapasitas = parseInt(formData.get("kapasitas") as string);
 
   await db.meja.create({
-    data: { nomor_meja: nomor, kapasitas },
+    data: { no_meja: nomor, kapasitas },
   });
   revalidatePath("/admin/meja");
 }
 
-export async function deleteMeja(id: number) {
+export async function deleteMeja(id: string) {
   await db.meja.delete({ where: { id_meja: id } });
   revalidatePath("/admin/meja");
 }
