@@ -149,8 +149,8 @@ Kerjakan berurutan. Satu tahap = satu sesi/prompt fokus ke AI. Jangan lompat tah
 
 **Tujuan:** Modul 2 selesai — Admin/Pemilik bisa kelola data dasar.
 
-- [ ] CRUD Menu, Kategori, Meja, Akun Staf
-- [ ] Toggle status stok
+- [x] CRUD Menu, Kategori, Meja, Akun Staf
+- [x] Toggle status stok
       **Konteks ke AI:** Modul 2 + tabel `Menu`, `Kategori`, `Meja`, `Pengguna`.
       **Test:** tambah/edit/hapus tiap entitas dari UI, cek konsisten ke DB.
 
