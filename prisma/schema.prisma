@@ -69,6 +69,8 @@ model Menu {
   kategori_id    String
   kategori       Kategori         @relation(fields: [kategori_id], references: [id_kategori])
   harga          Int
+  deskripsi      String?          @db.Text
+  image_url      String?          @db.Text
   status_stok    StatusStok       @default(TERSEDIA)
   detail_pesanan Detail_Pesanan[]
   createdAt      DateTime         @default(now())

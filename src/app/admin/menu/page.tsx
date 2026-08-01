@@ -36,6 +36,10 @@ export default async function MenuPage() {
                 <label className="text-xs font-semibold text-blue-900">Deskripsi</label>
                 <textarea name="deskripsi" rows={2} className="w-full mt-1 p-2 rounded-lg border border-blue-200" />
               </div>
+              <div>
+                <label className="text-xs font-semibold text-blue-900">URL Gambar (Cloudinary)</label>
+                <input type="text" name="image_url" placeholder="https://res.cloudinary.com/..." className="w-full mt-1 p-2 rounded-lg border border-blue-200 text-sm" />
+              </div>
               <button type="submit" className="bg-blue-600 text-white font-bold py-2 rounded-lg mt-2 hover:bg-blue-700 transition">
                 Simpan Menu
               </button>

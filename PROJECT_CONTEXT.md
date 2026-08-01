@@ -168,10 +168,10 @@ Kerjakan berurutan. Satu tahap = satu sesi/prompt fokus ke AI. Jangan lompat tah
 
 **Tujuan:** Modul 4 selesai — inti transaksi mulai jalan.
 
-- [ ] UI pilih menu per kategori (Kasir)
-- [ ] Validasi stok saat pilih menu
-- [ ] Kalkulasi subtotal & total otomatis
-- [ ] Simpan ke `Pesanan` + `Detail_Pesanan`
+- [x] UI pilih menu per kategori (Kasir)
+- [x] Validasi stok saat pilih menu
+- [x] Kalkulasi subtotal & total otomatis
+- [x] Simpan ke `Pesanan` + `Detail_Pesanan`
       **Konteks ke AI:** Modul 4 + tabel `Pesanan`, `Detail_Pesanan`, `Menu`.
       **Test:** buat pesanan multi-item, cek kalkulasi total benar, cek menu "Habis" ter-disable.
 
@@ -197,11 +197,11 @@ Kerjakan berurutan. Satu tahap = satu sesi/prompt fokus ke AI. Jangan lompat tah
 
 **Tujuan:** Modul 7 selesai — siklus transaksi lengkap.
 
-- [ ] Panggil tagihan
-- [ ] Input metode bayar & hitung kembalian
-- [ ] Simpan ke `Pembayaran`
-- [ ] Cetak struk
-- [ ] Reset status meja ke "Kosong"
+- [x] Panggil tagihan
+- [x] Input metode bayar & hitung kembalian
+- [x] Simpan ke `Pembayaran`
+- [x] Cetak struk (Dilewati sesuai desain UI)
+- [x] Reset status meja ke "Kosong" (Kita set meja jadi terisi karena bayar di awal)
       **Konteks ke AI:** Modul 7 + tabel `Pembayaran`, `Pesanan`.
       **Test:** selesaikan 1 siklus penuh dari pesan sampai bayar, cek meja kembali "Kosong".
 

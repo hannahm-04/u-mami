@@ -30,10 +30,11 @@ export async function createMenu(formData: FormData) {
   const nama = formData.get("nama") as string;
   const harga = parseInt(formData.get("harga") as string);
   const deskripsi = formData.get("deskripsi") as string || "";
+  const image_url = formData.get("image_url") as string || "";
   const id_kategori = formData.get("id_kategori") as string;
   
   await db.menu.create({
-    data: { nama_menu: nama, harga, deskripsi, kategori_id: id_kategori },
+    data: { nama_menu: nama, harga, deskripsi, image_url, kategori_id: id_kategori },
   });
   revalidatePath("/admin/menu");
 }
