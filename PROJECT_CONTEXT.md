@@ -179,8 +179,8 @@ Kerjakan berurutan. Satu tahap = satu sesi/prompt fokus ke AI. Jangan lompat tah
 
 **Tujuan:** Modul 5 selesai.
 
-- [ ] Layar antrean dapur (FIFO)
-- [ ] Update status masakan
+- [x] Layar antrean dapur (FIFO)
+- [x] Update status masakan
       **Konteks ke AI:** Modul 5 + tabel `Pesanan`, `Detail_Pesanan`.
       **Test:** buat beberapa pesanan, pastikan urutan tampil di dapur sesuai waktu pesan.
 
