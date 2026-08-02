@@ -1,5 +1,6 @@
 import KokiSidebar from "@/components/KokiSidebar";
 import AdminHeader from "@/components/AdminHeader"; // Reusing the same generic header
+import NotificationKoki from "@/components/NotificationKoki";
 
 export default function KokiLayout({
   children,
@@ -18,6 +19,7 @@ export default function KokiLayout({
           </div>
         </main>
       </div>
+      <NotificationKoki />
     </div>
   );
 }

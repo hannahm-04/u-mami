@@ -1,5 +1,6 @@
 import PelayanSidebar from "@/components/PelayanSidebar";
 import AdminHeader from "@/components/AdminHeader"; // Reusing the same generic header
+import NotificationPelayan from "@/components/NotificationPelayan";
 
 export default function PelayanLayout({
   children,
@@ -17,6 +18,7 @@ export default function PelayanLayout({
           </div>
         </main>
       </div>
+      <NotificationPelayan />
     </div>
   );
 }
