@@ -17,7 +17,7 @@ export async function createKategori(formData: FormData) {
   revalidatePath("/admin/kategori");
 }
 
-export async function deleteKategori(id: string) {
+export async function deleteKategori(id: number) {
   await db.kategori.delete({ where: { id_kategori: id } });
   revalidatePath("/admin/kategori");
 }
@@ -31,7 +31,7 @@ export async function createMenu(formData: FormData) {
   const nama = formData.get("nama") as string;
   const harga = parseInt(formData.get("harga") as string);
   const deskripsi = formData.get("deskripsi") as string || "";
-  const id_kategori = formData.get("id_kategori") as string;
+  const id_kategori = parseInt(formData.get("id_kategori") as string);
   
   let image_url = "";
   const imageFile = formData.get("image_file") as File;
@@ -54,11 +54,11 @@ export async function createMenu(formData: FormData) {
   revalidatePath("/pemilik/kelola-menu");
 }
 
-export async function updateMenu(id_menu: string, formData: FormData) {
+export async function updateMenu(id_menu: number, formData: FormData) {
   const nama = formData.get("nama") as string;
   const harga = parseInt(formData.get("harga") as string);
   const deskripsi = formData.get("deskripsi") as string || "";
-  const id_kategori = formData.get("id_kategori") as string;
+  const id_kategori = parseInt(formData.get("id_kategori") as string);
   
   const dataToUpdate: any = { nama_menu: nama, harga, deskripsi, kategori_id: id_kategori };
   
@@ -82,7 +82,7 @@ export async function updateMenu(id_menu: string, formData: FormData) {
   revalidatePath("/pemilik/kelola-menu");
 }
 
-export async function updateStokMenu(id_menu: string, change: number) {
+export async function updateStokMenu(id_menu: number, change: number) {
   await db.menu.update({
     where: { id_menu },
     data: { stok: { increment: change } },
@@ -92,7 +92,7 @@ export async function updateStokMenu(id_menu: string, change: number) {
   revalidatePath("/koki/stok");
 }
 
-export async function deleteMenu(id: string) {
+export async function deleteMenu(id: number) {
   await db.menu.delete({ where: { id_menu: id } });
   revalidatePath("/admin/menu");
   revalidatePath("/pemilik/kelola-menu");
@@ -151,12 +151,12 @@ export async function createStaf(formData: FormData) {
   revalidatePath("/admin/staf");
 }
 
-export async function deleteStaf(id: string) {
+export async function deleteStaf(id: number) {
   await db.pengguna.delete({ where: { id_user: id } });
   revalidatePath("/admin/staf");
 }
 
-export async function updateStaf(id: string, formData: FormData) {
+export async function updateStaf(id: number, formData: FormData) {
   const username = formData.get("username") as string;
   const nama_lengkap = formData.get("nama_lengkap") as string;
   const role = formData.get("role") as any;

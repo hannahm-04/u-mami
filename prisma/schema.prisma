@@ -47,7 +47,7 @@ enum MetodePembayaran {
 }
 
 model Pengguna {
-  id_user      String       @id @default(cuid())
+  id_user      Int       @id @default(autoincrement())
   username     String       @unique
   password     String
   nama_lengkap String
@@ -58,7 +58,7 @@ model Pengguna {
 }
 
 model Kategori {
-  id_kategori   String   @id @default(cuid())
+  id_kategori   Int   @id @default(autoincrement())
   nama_kategori String
   menu          Menu[]
   createdAt     DateTime @default(now())
@@ -66,9 +66,9 @@ model Kategori {
 }
 
 model Menu {
-  id_menu        String           @id @default(cuid())
+  id_menu        Int              @id @default(autoincrement())
   nama_menu      String
-  kategori_id    String
+  kategori_id    Int
   kategori       Kategori         @relation(fields: [kategori_id], references: [id_kategori])
   harga          Int
   deskripsi      String?          @db.Text
@@ -117,7 +117,7 @@ model Detail_Pesanan {
   id_detail   Int      @id @default(autoincrement())
   pesanan_id  Int
   pesanan     Pesanan  @relation(fields: [pesanan_id], references: [id_pesanan])
-  menu_id     String
+  menu_id     Int
   menu        Menu     @relation(fields: [menu_id], references: [id_menu])
   jml_pesanan Int
   subtotal    Int
@@ -127,7 +127,7 @@ model Detail_Pesanan {
 
 model Pembayaran {
   id_pembayaran     Int              @id @default(autoincrement())
-  user_id           String
+  user_id           Int
   user              Pengguna         @relation(fields: [user_id], references: [id_user])
   pesanan_id        Int              @unique
   pesanan           Pesanan          @relation(fields: [pesanan_id], references: [id_pesanan])
