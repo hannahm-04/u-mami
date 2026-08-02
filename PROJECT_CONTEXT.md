@@ -209,9 +209,9 @@ Kerjakan berurutan. Satu tahap = satu sesi/prompt fokus ke AI. Jangan lompat tah
 
 **Tujuan:** Modul 8 selesai.
 
-- [ ] Filter periode
-- [ ] Grafik omzet
-- [ ] Daftar menu terlaris
+- [x] Filter periode
+- [x] Grafik omzet
+- [x] Daftar menu terlaris
       **Konteks ke AI:** Modul 8 + tabel `Pembayaran`, `Pesanan`, `Detail_Pesanan`.
       **Test:** login sebagai Pemilik, cek data laporan sesuai transaksi yang sudah dibuat.
 
