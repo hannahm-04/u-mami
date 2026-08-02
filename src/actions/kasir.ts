@@ -11,7 +11,8 @@ export async function getMenuLengkap() {
 
 export async function getMejaTersedia() {
   return await db.meja.findMany({
-    where: { status_meja: "KOSONG" }
+    // Hanya meja yang sudah terisi (pelanggan sudah dapat meja) yang bisa memesan
+    where: { status_meja: "TERISI" }
   });
 }
 
@@ -22,7 +23,7 @@ export type CartItem = {
   qty: number;
 };
 
-export async function buatPesanan(meja_id: string, cart: CartItem[]) {
+export async function buatPesanan(meja_id: number, cart: CartItem[]) {
   if (!meja_id || cart.length === 0) throw new Error("Data tidak lengkap");
 
   let total_harga = 0;
@@ -30,7 +31,8 @@ export async function buatPesanan(meja_id: string, cart: CartItem[]) {
     total_harga += item.harga * item.qty;
   });
 
-  // Karena ini "Bayar di Awal" (Pay First), kita bisa langsung ubah meja jadi TERISI
+  // Meja sudah TERISI dari awal (berdasarkan antrean/pelayan), jadi tidak perlu di-update lagi.
+  // Tapi untuk berjaga-jaga:
   await db.meja.update({
     where: { id_meja: meja_id },
     data: { status_meja: "TERISI" }
@@ -51,10 +53,18 @@ export async function buatPesanan(meja_id: string, cart: CartItem[]) {
     }
   });
 
+  // Kurangi stok menu
+  for (const item of cart) {
+    await db.menu.update({
+      where: { id_menu: item.id_menu },
+      data: { stok: { decrement: item.qty } }
+    });
+  }
+
   return pesanan.id_pesanan;
 }
 
-export async function getPesananUntukDibayar(id_pesanan: string) {
+export async function getPesananUntukDibayar(id_pesanan: number) {
   return await db.pesanan.findUnique({
     where: { id_pesanan },
     include: {
@@ -67,7 +77,7 @@ export async function getPesananUntukDibayar(id_pesanan: string) {
 }
 
 export async function prosesPembayaran(
-  id_pesanan: string, 
+  id_pesanan: number, 
   user_id: string, 
   metode: "CASH" | "QRIS" | "DEBIT", 
   nominal: number

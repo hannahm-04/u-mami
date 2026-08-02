@@ -10,7 +10,7 @@ type Menu = {
   nama_menu: string;
   harga: number;
   image_url: string | null;
-  status_stok: string;
+  stok: number;
   kategori: {
     id_kategori: string;
     nama_kategori: string;
@@ -18,7 +18,7 @@ type Menu = {
 };
 
 type Meja = {
-  id_meja: string;
+  id_meja: number;
   no_meja: string;
 };
 
@@ -40,10 +40,11 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
   const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
 
   const handleAdd = (menu: Menu) => {
-    if (menu.status_stok === "HABIS") return;
+    if (menu.stok <= 0) return;
     setCart(prev => {
       const existing = prev.find(item => item.id_menu === menu.id_menu);
       if (existing) {
+        if (existing.qty >= menu.stok) return prev; // Limit to available stock
         return prev.map(item => 
           item.id_menu === menu.id_menu ? { ...item, qty: item.qty + 1 } : item
         );
@@ -56,7 +57,7 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
     if (!selectedMeja) return alert("Pilih meja terlebih dahulu!");
     setIsLoading(true);
     try {
-      const id_pesanan = await buatPesanan(selectedMeja, cart);
+      const id_pesanan = await buatPesanan(Number(selectedMeja), cart);
       router.push(`/kasir/pembayaran?id=${id_pesanan}`);
     } catch (error) {
       console.error(error);
@@ -97,7 +98,7 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredMenus.map(menu => {
           const qtyInCart = cart.find(c => c.id_menu === menu.id_menu)?.qty || 0;
-          const isHabis = menu.status_stok === "HABIS";
+          const isHabis = menu.stok === 0;
 
           return (
             <div key={menu.id_menu} className={`relative flex flex-col items-center ${isHabis ? 'opacity-50 grayscale' : ''}`}>
@@ -123,7 +124,9 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
               </div>
               <p className="text-[#387bd5] font-bold text-sm text-center w-full truncate">{menu.nama_menu}</p>
               <p className="text-[#387bd5] font-bold text-sm text-center w-full">Rp {menu.harga.toLocaleString("id-ID")}</p>
-              {isHabis && <span className="text-red-500 font-bold text-xs">Habis</span>}
+              <span className={`text-xs font-bold ${isHabis ? "text-red-500" : "text-green-600"}`}>
+                Stok: {menu.stok}
+              </span>
             </div>
           )
         })}
@@ -146,11 +149,11 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded-2xl w-96 max-w-full">
-            <h3 className="text-2xl font-bold text-[#387bd5] mb-4">Pilih Meja</h3>
+            <h3 className="text-2xl font-bold text-[#387bd5] mb-4">Pilih Meja Pelanggan</h3>
             <select 
               value={selectedMeja} 
               onChange={e => setSelectedMeja(e.target.value)}
-              className="w-full p-3 border-2 border-blue-200 rounded-xl mb-6 text-lg font-bold text-gray-700"
+              className="w-full p-3 border-2 border-blue-400 bg-white rounded-xl mb-6 text-lg font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">-- Pilih Meja --</option>
               {mejaList.map(m => (

@@ -23,7 +23,7 @@ export default async function PembuatanPesananPage() {
               {/* Header Kartu */}
               <div className="bg-[#6b9ce8] p-4 flex justify-between items-center">
                 <h3 className="text-white font-bold text-xl tracking-wide">
-                  P-{p.id_pesanan.substring(0, 3).toUpperCase()}
+                  P-{String(p.id_pesanan).padStart(3, '0')}
                 </h3>
                 <span className="text-white font-semibold text-sm">
                   {timeString}

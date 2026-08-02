@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { createMenu, deleteMenu, toggleStokMenu, updateMenu } from "@/actions/master";
+import { createMenu, deleteMenu, updateMenu } from "@/actions/master";
 
 export default function MenuManager({ menuList, kategoriList }: { menuList: any[], kategoriList: any[] }) {
   const [editingMenu, setEditingMenu] = useState<any>(null);
@@ -50,7 +50,7 @@ export default function MenuManager({ menuList, kategoriList }: { menuList: any[
           <form ref={formRef} action={handleAction} className="flex flex-col gap-3">
             <div>
               <label className="text-xs font-semibold text-blue-900">Kategori</label>
-              <select name="id_kategori" defaultValue={editingMenu?.kategori_id || ""} required className="w-full mt-1 p-2 rounded-lg border border-blue-200">
+              <select name="id_kategori" defaultValue={editingMenu?.kategori_id || ""} required className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500">
                 <option value="">Pilih Kategori</option>
                 {kategoriList.map(k => (
                   <option key={k.id_kategori} value={k.id_kategori}>{k.nama_kategori}</option>
@@ -59,21 +59,21 @@ export default function MenuManager({ menuList, kategoriList }: { menuList: any[
             </div>
             <div>
               <label className="text-xs font-semibold text-blue-900">Nama Menu</label>
-              <input type="text" name="nama" defaultValue={editingMenu?.nama_menu || ""} required className="w-full mt-1 p-2 rounded-lg border border-blue-200" />
+              <input type="text" name="nama" defaultValue={editingMenu?.nama_menu || ""} required className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500" />
             </div>
             <div>
               <label className="text-xs font-semibold text-blue-900">Harga (Rp)</label>
-              <input type="number" name="harga" defaultValue={editingMenu?.harga || ""} required className="w-full mt-1 p-2 rounded-lg border border-blue-200" />
+              <input type="number" name="harga" defaultValue={editingMenu?.harga || ""} required className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500" />
             </div>
             <div>
               <label className="text-xs font-semibold text-blue-900">Deskripsi</label>
-              <textarea name="deskripsi" defaultValue={editingMenu?.deskripsi || ""} rows={2} className="w-full mt-1 p-2 rounded-lg border border-blue-200" />
+              <textarea name="deskripsi" defaultValue={editingMenu?.deskripsi || ""} rows={2} className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500" />
             </div>
             <div>
               <label className="text-xs font-semibold text-blue-900">
                 Upload Gambar Menu (Cloudinary)
               </label>
-              <input type="file" name="image_file" accept="image/*" required={!editingMenu} className="w-full mt-1 p-2 rounded-lg border border-blue-200 text-sm bg-white" />
+              <input type="file" name="image_file" accept="image/*" required={!editingMenu} className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
               {editingMenu && editingMenu.image_url && (
                 <p className="text-[10px] text-gray-500 mt-1">
                   *Abaikan jika tidak ingin mengganti gambar
@@ -96,13 +96,13 @@ export default function MenuManager({ menuList, kategoriList }: { menuList: any[
                 <th className="p-4 border-b">Menu</th>
                 <th className="p-4 border-b">Kategori</th>
                 <th className="p-4 border-b">Harga</th>
-                <th className="p-4 border-b text-center">Status Stok</th>
+                <th className="p-4 border-b text-center">Stok</th>
                 <th className="p-4 border-b text-center">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {menuList.map((m) => (
-                <tr key={m.id_menu} className="hover:bg-gray-50 border-b last:border-0 text-sm">
+                <tr key={m.id_menu} className="hover:bg-gray-50 border-b last:border-0 text-sm text-gray-900">
                   <td className="p-4 flex gap-3 items-center">
                     {m.image_url ? (
                       <img src={m.image_url} alt={m.nama_menu} className="w-12 h-12 rounded object-cover flex-shrink-0 bg-gray-200" />
@@ -116,15 +116,8 @@ export default function MenuManager({ menuList, kategoriList }: { menuList: any[
                   </td>
                   <td className="p-4">{m.kategori.nama_kategori}</td>
                   <td className="p-4 font-mono">Rp {m.harga.toLocaleString("id-ID")}</td>
-                  <td className="p-4 text-center">
-                    <button 
-                      onClick={() => toggleStokMenu(m.id_menu, m.status_stok)}
-                      className={`px-3 py-1 text-xs font-bold rounded-full ${
-                        m.status_stok === "TERSEDIA" ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"
-                      }`}
-                    >
-                      {m.status_stok}
-                    </button>
+                  <td className="p-4 text-center font-bold">
+                    {m.stok}
                   </td>
                   <td className="p-4">
                     <div className="flex gap-2 justify-center">

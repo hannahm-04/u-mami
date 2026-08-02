@@ -18,7 +18,7 @@ export default async function KategoriPage() {
                   type="text" 
                   name="nama" 
                   required 
-                  className="w-full mt-1 p-2 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <button 
@@ -43,8 +43,8 @@ export default async function KategoriPage() {
               </thead>
               <tbody>
                 {kategoriList.map((k) => (
-                  <tr key={k.id_kategori} className="hover:bg-gray-50 border-b last:border-0">
-                    <td className="p-4 text-gray-600">#{k.id_kategori}</td>
+                  <tr key={k.id_kategori} className="hover:bg-gray-50 border-b last:border-0 text-gray-900">
+                    <td className="p-4 text-gray-800">#{k.id_kategori}</td>
                     <td className="p-4 font-semibold">{k.nama_kategori}</td>
                     <td className="p-4">
                       <form action={async () => {

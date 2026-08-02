@@ -82,14 +82,14 @@ export async function updateMenu(id_menu: string, formData: FormData) {
   revalidatePath("/pemilik/kelola-menu");
 }
 
-export async function toggleStokMenu(id_menu: string, current_status: string) {
-  const newStatus = current_status === "TERSEDIA" ? "HABIS" : "TERSEDIA";
+export async function updateStokMenu(id_menu: string, change: number) {
   await db.menu.update({
     where: { id_menu },
-    data: { status_stok: newStatus as any },
+    data: { stok: { increment: change } },
   });
   revalidatePath("/admin/menu");
   revalidatePath("/pemilik/kelola-menu");
+  revalidatePath("/koki/stok");
 }
 
 export async function deleteMenu(id: string) {
@@ -106,14 +106,27 @@ export async function getMeja() {
 export async function createMeja(formData: FormData) {
   const nomor = formData.get("nomor") as string;
   const kapasitas = parseInt(formData.get("kapasitas") as string);
+  const lokasi = formData.get("lokasi") as any;
 
   await db.meja.create({
-    data: { no_meja: nomor, kapasitas },
+    data: { no_meja: nomor, kapasitas, lokasi },
   });
   revalidatePath("/admin/meja");
 }
 
-export async function deleteMeja(id: string) {
+export async function updateMeja(id: number, formData: FormData) {
+  const nomor = formData.get("nomor") as string;
+  const kapasitas = parseInt(formData.get("kapasitas") as string);
+  const lokasi = formData.get("lokasi") as any;
+
+  await db.meja.update({
+    where: { id_meja: id },
+    data: { no_meja: nomor, kapasitas, lokasi },
+  });
+  revalidatePath("/admin/meja");
+}
+
+export async function deleteMeja(id: number) {
   await db.meja.delete({ where: { id_meja: id } });
   revalidatePath("/admin/meja");
 }

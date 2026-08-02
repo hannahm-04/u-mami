@@ -15,7 +15,7 @@ export default async function PengantaranPesananPage() {
             {/* Header Kartu */}
             <div className="bg-[#6b9ce8] p-4">
               <h3 className="text-white font-bold text-xl tracking-wide">
-                P-{p.id_pesanan.substring(0, 3).toUpperCase()}
+                P-{String(p.id_pesanan).padStart(3, '0')} (Meja {p.meja.no_meja})
               </h3>
             </div>
             

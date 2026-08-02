@@ -15,15 +15,17 @@ enum Role {
   PEMILIK
 }
 
-enum StatusStok {
-  TERSEDIA
-  HABIS
-}
 
 enum StatusMeja {
   KOSONG
   TERISI
 }
+
+enum LokasiMeja {
+  INDOOR
+  OUTDOOR
+}
+
 
 enum StatusAntrean {
   MENUNGGU
@@ -71,24 +73,25 @@ model Menu {
   harga          Int
   deskripsi      String?          @db.Text
   image_url      String?          @db.Text
-  status_stok    StatusStok       @default(TERSEDIA)
+  stok           Int              @default(0)
   detail_pesanan Detail_Pesanan[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
 }
 
 model Meja {
-  id_meja     String     @id @default(cuid())
+  id_meja     Int        @id @default(autoincrement())
   no_meja     String     @unique
   kapasitas   Int
   status_meja StatusMeja @default(KOSONG)
+  lokasi      LokasiMeja @default(INDOOR)
   pesanan     Pesanan[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
 
 model Antrean {
-  id_antrean       String        @id @default(cuid())
+  id_antrean       Int           @id @default(autoincrement())
   nama_pelanggan   String
   jumlah_orang     Int
   waktu_kedatangan DateTime      @default(now())
@@ -98,8 +101,8 @@ model Antrean {
 }
 
 model Pesanan {
-  id_pesanan     String           @id @default(cuid())
-  meja_id        String
+  id_pesanan     Int              @id @default(autoincrement())
+  meja_id        Int
   meja           Meja             @relation(fields: [meja_id], references: [id_meja])
   total_harga    Int              @default(0)
   status_pesanan StatusPesanan    @default(DIPROSES)
@@ -111,8 +114,8 @@ model Pesanan {
 }
 
 model Detail_Pesanan {
-  id_detail   String   @id @default(cuid())
-  pesanan_id  String
+  id_detail   Int      @id @default(autoincrement())
+  pesanan_id  Int
   pesanan     Pesanan  @relation(fields: [pesanan_id], references: [id_pesanan])
   menu_id     String
   menu        Menu     @relation(fields: [menu_id], references: [id_menu])
@@ -123,10 +126,10 @@ model Detail_Pesanan {
 }
 
 model Pembayaran {
-  id_pembayaran     String           @id @default(cuid())
+  id_pembayaran     Int              @id @default(autoincrement())
   user_id           String
   user              Pengguna         @relation(fields: [user_id], references: [id_user])
-  pesanan_id        String           @unique
+  pesanan_id        Int              @unique
   pesanan           Pesanan          @relation(fields: [pesanan_id], references: [id_pesanan])
   metode_pembayaran MetodePembayaran
   nominal           Int

@@ -1,4 +1,5 @@
-import { getAntreanAktif, tambahAntrean, panggilAntrean } from "@/actions/pelayan";
+import { getAntreanAktif, tambahAntrean } from "@/actions/pelayan";
+import PanggilAntreanButton from "@/components/PanggilAntreanButton";
 
 export default async function DaftarAntreanPage() {
   const antrean = await getAntreanAktif();
@@ -9,22 +10,22 @@ export default async function DaftarAntreanPage() {
       <div className="bg-[#a8ccf8] rounded-xl p-4 flex flex-col md:flex-row items-center gap-4 mb-8 shadow-sm">
         <form action={tambahAntrean} className="flex flex-col md:flex-row items-center gap-6 w-full">
           <div className="flex items-center gap-2">
-            <label className="text-white font-bold text-lg">Nama</label>
+            <label className="text-[#387bd5] font-extrabold text-lg">Nama</label>
             <input 
               type="text" 
               name="nama" 
               required 
-              className="w-48 px-3 py-1.5 rounded-lg border-none focus:ring-2 focus:ring-[#387bd5] outline-none"
+              className="w-48 px-3 py-1.5 rounded-lg border-2 border-[#387bd5] text-gray-900 focus:ring-2 focus:ring-[#387bd5] outline-none"
             />
           </div>
           <div className="flex items-center gap-2">
-            <label className="text-white font-bold text-lg">Jml Kursi</label>
+            <label className="text-[#387bd5] font-extrabold text-lg">Jml Kursi</label>
             <input 
               type="number" 
               name="jumlahKursi" 
               required 
               min={1}
-              className="w-20 px-3 py-1.5 rounded-lg border-none focus:ring-2 focus:ring-[#387bd5] outline-none"
+              className="w-20 px-3 py-1.5 rounded-lg border-2 border-[#387bd5] text-gray-900 focus:ring-2 focus:ring-[#387bd5] outline-none"
             />
           </div>
           <button 
@@ -54,14 +55,7 @@ export default async function DaftarAntreanPage() {
               </div>
               
               <div className="mt-auto flex justify-center">
-                <form action={async () => {
-                  "use server";
-                  await panggilAntrean(a.id_antrean);
-                }}>
-                  <button type="submit" className="bg-[#387bd5] hover:bg-[#2b64b1] transition text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md">
-                    Panggil Antrean
-                  </button>
-                </form>
+                <PanggilAntreanButton id_antrean={a.id_antrean} />
               </div>
             </div>
           </div>

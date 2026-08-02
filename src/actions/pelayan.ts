@@ -28,13 +28,39 @@ export async function tambahAntrean(formData: FormData) {
   revalidatePath("/pelayan/antrean");
 }
 
-export async function panggilAntrean(id_antrean: string) {
+export async function panggilAntrean(id_antrean: number) {
+  const antrean = await db.antrean.findUnique({ where: { id_antrean } });
+  if (!antrean) return { error: "Antrean tidak ditemukan!" };
+
+  // Cari meja kosong yang kapasitasnya cukup (paling kecil yang muat)
+  const mejaKosong = await db.meja.findFirst({
+    where: { 
+      status_meja: "KOSONG",
+      kapasitas: { gte: antrean.jumlah_orang }
+    },
+    orderBy: { kapasitas: "asc" }
+  });
+
+  if (!mejaKosong) {
+    return { error: `Tidak ada meja kosong yang muat untuk ${antrean.jumlah_orang} orang saat ini!` };
+  }
+
+  // Tandai meja terisi
+  await db.meja.update({
+    where: { id_meja: mejaKosong.id_meja },
+    data: { status_meja: "TERISI" }
+  });
+
+  // Update antrean
   await db.antrean.update({
     where: { id_antrean },
     data: { status_antrean: "DIPANGGIL" },
   });
 
   revalidatePath("/pelayan/antrean");
+  revalidatePath("/pelayan/meja");
+  
+  return { success: true, meja: mejaKosong.no_meja };
 }
 
 // --- MEJA ---
@@ -44,7 +70,7 @@ export async function getSemuaMeja() {
   });
 }
 
-export async function toggleStatusMeja(id_meja: string, currentStatus: string) {
+export async function toggleStatusMeja(id_meja: number, currentStatus: string) {
   const newStatus = currentStatus === "KOSONG" ? "TERISI" : "KOSONG";
   
   await db.meja.update({
@@ -69,7 +95,7 @@ export async function getPesananSiapAntar() {
   });
 }
 
-export async function konfirmasiDiantar(id_pesanan: string) {
+export async function konfirmasiDiantar(id_pesanan: number) {
   await db.pesanan.update({
     where: { id_pesanan },
     data: { status_pesanan: "SELESAI" }

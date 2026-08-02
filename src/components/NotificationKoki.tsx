@@ -9,44 +9,8 @@ export default function NotificationKoki() {
   const router = useRouter();
 
   useEffect(() => {
-    // Initial fetch to populate seenIds so we don't alert on existing ones
-    fetch("/api/polling/koki")
-      .then(res => res.json())
-      .then(data => {
-        if (data.pesanan) {
-          setSeenIds(new Set(data.pesanan.map((p: any) => p.id_pesanan)));
-        }
-      })
-      .catch(console.error);
-
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch("/api/polling/koki");
-        const data = await res.json();
-        if (data.pesanan) {
-          const incomingIds = new Set(data.pesanan.map((p: any) => p.id_pesanan));
-          
-          // Check for a new order
-          const baru = data.pesanan.find((p: any) => !seenIds.has(p.id_pesanan));
-          if (baru) {
-            setPesananBaru(baru);
-            setSeenIds(prev => new Set([...prev, baru.id_pesanan]));
-          } else {
-            // Update seenIds to just the current ones (in case some were removed)
-            setSeenIds(prev => {
-              const next = new Set(prev);
-              incomingIds.forEach(id => next.add(id as string));
-              return next;
-            });
-          }
-        }
-      } catch (error) {
-        console.error("Polling error", error);
-      }
-    }, 5000); // Poll every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [seenIds]);
+    // Polling notifikasi dihentikan sesuai permintaan
+  }, []);
 
   if (!pesananBaru) return null;
 
@@ -69,7 +33,7 @@ export default function NotificationKoki() {
         <div className="w-full bg-[#a8ccf8] rounded-xl overflow-hidden flex flex-col">
           {/* Header */}
           <div className="bg-[#6b9ce8] p-4 flex justify-between items-center text-white">
-            <span className="font-bold text-xl tracking-wide">P-{pesananBaru.id_pesanan.substring(0, 3).toUpperCase()}</span>
+            <span className="font-bold text-xl tracking-wide">P-{String(pesananBaru.id_pesanan).padStart(3, '0')}</span>
             <span className="font-semibold text-sm">{timeString}</span>
           </div>
 

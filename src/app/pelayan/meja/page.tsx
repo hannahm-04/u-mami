@@ -4,17 +4,9 @@ import { Armchair } from "lucide-react";
 export default async function StatusMejaPage() {
   const semuaMeja = await getSemuaMeja();
 
-  // Asumsi untuk referensi UI: Meja 1-10 = Indoor, Meja 11+ = Outdoor
-  // Atau pisahkan berdasarkan prefix jika menggunakan string. Kita coba pisahkan jadi dua array.
-  const indoorMeja = semuaMeja.filter(m => {
-    const num = parseInt(m.no_meja.replace(/\D/g, ''));
-    return !isNaN(num) && num <= 10;
-  });
+  const indoorMeja = semuaMeja.filter(m => m.lokasi === "INDOOR");
   
-  const outdoorMeja = semuaMeja.filter(m => {
-    const num = parseInt(m.no_meja.replace(/\D/g, ''));
-    return isNaN(num) || num > 10;
-  });
+  const outdoorMeja = semuaMeja.filter(m => m.lokasi === "OUTDOOR");
 
   const renderTableGroup = (title: string, tables: typeof semuaMeja) => (
     <div className="mb-10">

@@ -46,7 +46,7 @@ export default function LoginForm() {
       )}
       
       <div className="flex flex-col gap-1">
-        <label className="text-white text-sm font-semibold tracking-wide px-1">
+        <label className="text-[#2b64b1] text-sm font-bold tracking-wide px-1">
           Username
         </label>
         <input
@@ -54,12 +54,12 @@ export default function LoginForm() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-full outline-none text-gray-800 font-medium"
+          className="w-full px-4 py-2.5 rounded-full border-2 border-blue-400 bg-white outline-none text-gray-900 font-bold focus:ring-2 focus:ring-[#3b71ca]"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-white text-sm font-semibold tracking-wide px-1">
+        <label className="text-[#2b64b1] text-sm font-bold tracking-wide px-1">
           Password
         </label>
         <input
@@ -67,7 +67,7 @@ export default function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-full outline-none text-gray-800 font-medium"
+          className="w-full px-4 py-2.5 rounded-full border-2 border-blue-400 bg-white outline-none text-gray-900 font-bold focus:ring-2 focus:ring-[#3b71ca]"
         />
       </div>
 

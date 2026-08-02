@@ -17,7 +17,7 @@ export async function getPesananDiproses() {
   });
 }
 
-export async function tandaiSelesaiDimasak(id_pesanan: string) {
+export async function tandaiSelesaiDimasak(id_pesanan: number) {
   await db.pesanan.update({
     where: { id_pesanan },
     data: { status_pesanan: "TERSAJI" }

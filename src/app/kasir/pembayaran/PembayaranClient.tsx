@@ -69,7 +69,7 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
           </div>
           <div className="flex">
             <span className="w-48">No. Pesanan</span>
-            <div className="bg-white px-4 py-1 rounded-full flex-1 truncate">P-{pesanan.id_pesanan.substring(0,3).toUpperCase()}</div>
+            <div className="bg-white px-4 py-1 rounded-full flex-1 truncate">P-{String(pesanan.id_pesanan).padStart(3, '0')}</div>
           </div>
           <div className="flex">
             <span className="w-48">No. Meja</span>
@@ -149,7 +149,7 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
               <div className="space-y-2 text-sm md:text-base font-semibold">
                 <div className="flex justify-between">
                   <span>No Pesanan</span>
-                  <span>P-{pesanan.id_pesanan.substring(0,3).toUpperCase()}</span>
+                  <span>P-{String(pesanan.id_pesanan).padStart(3, '0')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>No Meja</span>

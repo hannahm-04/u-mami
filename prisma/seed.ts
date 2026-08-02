@@ -1,4 +1,4 @@
-import { Role, StatusStok, StatusMeja } from '../src/generated/prisma';
+import { Role, StatusMeja } from '../src/generated/prisma';
 import prisma from '../src/lib/db';
 
 async function main() {
@@ -90,28 +90,28 @@ async function main() {
         nama_menu: 'Nasi Goreng Spesial',
         kategori_id: kategoriMakanan.id_kategori,
         harga: 25000,
-        status_stok: StatusStok.TERSEDIA,
+        stok: 100,
       },
       {
         id_menu: 'M0002',
         nama_menu: 'Mie Goreng Ayam',
         kategori_id: kategoriMakanan.id_kategori,
         harga: 20000,
-        status_stok: StatusStok.TERSEDIA,
+        stok: 100,
       },
       {
         id_menu: 'M0003',
         nama_menu: 'Es Teh Manis',
         kategori_id: kategoriMinuman.id_kategori,
         harga: 5000,
-        status_stok: StatusStok.TERSEDIA,
+        stok: 100,
       },
       {
         id_menu: 'M0004',
         nama_menu: 'Jus Jeruk',
         kategori_id: kategoriMinuman.id_kategori,
         harga: 12000,
-        status_stok: StatusStok.HABIS,
+        stok: 0,
       },
     ],
   });
@@ -119,11 +119,11 @@ async function main() {
   // 4. Seed Meja
   await prisma.meja.createMany({
     data: [
-      { id_meja: 'T0001', no_meja: 'M1', kapasitas: 2, status_meja: StatusMeja.KOSONG },
-      { id_meja: 'T0002', no_meja: 'M2', kapasitas: 4, status_meja: StatusMeja.KOSONG },
-      { id_meja: 'T0003', no_meja: 'M3', kapasitas: 4, status_meja: StatusMeja.KOSONG },
-      { id_meja: 'T0004', no_meja: 'M4', kapasitas: 6, status_meja: StatusMeja.KOSONG },
-      { id_meja: 'T0005', no_meja: 'M5', kapasitas: 8, status_meja: StatusMeja.KOSONG },
+      { no_meja: 'M1', kapasitas: 2, status_meja: StatusMeja.KOSONG },
+      { no_meja: 'M2', kapasitas: 4, status_meja: StatusMeja.KOSONG },
+      { no_meja: 'M3', kapasitas: 4, status_meja: StatusMeja.KOSONG },
+      { no_meja: 'M4', kapasitas: 6, status_meja: StatusMeja.KOSONG },
+      { no_meja: 'M5', kapasitas: 8, status_meja: StatusMeja.KOSONG },
     ],
   });
 

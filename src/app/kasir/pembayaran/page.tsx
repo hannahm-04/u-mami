@@ -20,7 +20,7 @@ export default async function PembayaranPage({
     );
   }
 
-  const pesanan = await getPesananUntukDibayar(id);
+  const pesanan = await getPesananUntukDibayar(Number(id));
 
   if (!pesanan) {
     return (

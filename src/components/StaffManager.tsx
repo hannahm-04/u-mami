@@ -37,19 +37,19 @@ export default function StaffManager({ initialStafList }: { initialStafList: any
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <div>
               <label className="text-xs font-semibold text-blue-900">Nama Lengkap</label>
-              <input type="text" name="nama_lengkap" required defaultValue={editingStaf?.nama_lengkap || ""} className="w-full mt-1 p-2 rounded-lg border border-blue-200" />
+              <input type="text" name="nama_lengkap" required defaultValue={editingStaf?.nama_lengkap || ""} className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500" />
             </div>
             <div>
               <label className="text-xs font-semibold text-blue-900">Username</label>
-              <input type="text" name="username" required defaultValue={editingStaf?.username || ""} className="w-full mt-1 p-2 rounded-lg border border-blue-200" />
+              <input type="text" name="username" required defaultValue={editingStaf?.username || ""} className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500" />
             </div>
             <div>
               <label className="text-xs font-semibold text-blue-900">Password {editingStaf && "(Kosongkan jika tidak diubah)"}</label>
-              <input type="password" name="password" required={!editingStaf} className="w-full mt-1 p-2 rounded-lg border border-blue-200" />
+              <input type="password" name="password" required={!editingStaf} className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500" />
             </div>
             <div>
               <label className="text-xs font-semibold text-blue-900">Role / Jabatan</label>
-              <select name="role" required defaultValue={editingStaf?.role || ""} className="w-full mt-1 p-2 rounded-lg border border-blue-200">
+              <select name="role" required defaultValue={editingStaf?.role || ""} className="w-full mt-1 p-2 rounded-lg border-2 border-blue-400 bg-white text-gray-900 placeholder-gray-500">
                 <option value="">Pilih Jabatan</option>
                 <option value={Role.KASIR}>Kasir</option>
                 <option value={Role.PELAYAN}>Pelayan</option>
@@ -82,7 +82,7 @@ export default function StaffManager({ initialStafList }: { initialStafList: any
             </thead>
             <tbody>
               {initialStafList.map((s) => (
-                <tr key={s.id_user} className="hover:bg-gray-50 border-b last:border-0 text-sm">
+                <tr key={s.id_user} className="hover:bg-gray-50 border-b last:border-0 text-sm text-gray-900">
                   <td className="p-4 font-bold text-gray-800">{s.nama_lengkap}</td>
                   <td className="p-4 text-gray-600">{s.username}</td>
                   <td className="p-4">
