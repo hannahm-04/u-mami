@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LogOut } from "lucide-react";
+import { LogOut, Home } from "lucide-react";
 import { signOut } from "next-auth/react";
 import logo from "../app/logo.svg";
 
@@ -51,14 +51,23 @@ export default function PelayanSidebar() {
         })}
       </nav>
 
-      {/* Logout */}
-      <button
-        onClick={() => signOut({ callbackUrl: "/login" })}
-        className="mt-auto flex items-center gap-2 text-white font-bold hover:opacity-80 transition px-8"
-      >
-        <LogOut size={24} />
-        <span className="text-lg">LOGOUT</span>
-      </button>
+      {/* Logout & Home */}
+      <div className="mt-auto flex flex-col items-start gap-4 pb-4">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-white font-bold hover:opacity-80 transition px-8"
+        >
+          <Home size={24} />
+          <span className="text-lg">BERANDA</span>
+        </Link>
+        <button
+          onClick={() => signOut({ callbackUrl: "/login" })}
+          className="flex items-center gap-2 text-white font-bold hover:opacity-80 transition px-8"
+        >
+          <LogOut size={24} />
+          <span className="text-lg">LOGOUT</span>
+        </button>
+      </div>
     </div>
   );
 }

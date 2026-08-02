@@ -6,13 +6,13 @@ import { useRouter } from "next/navigation";
 import { buatPesanan, CartItem } from "@/actions/kasir";
 
 type Menu = {
-  id_menu: string;
+  id_menu: number;
   nama_menu: string;
   harga: number;
   image_url: string | null;
   stok: number;
   kategori: {
-    id_kategori: string;
+    id_kategori: number;
     nama_kategori: string;
   };
 };

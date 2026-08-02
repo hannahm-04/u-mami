@@ -18,7 +18,7 @@ export async function getMejaTersedia() {
 
 // Data keranjang yang dikirim dari client
 export type CartItem = {
-  id_menu: string;
+  id_menu: number;
   harga: number;
   qty: number;
 };
@@ -45,7 +45,7 @@ export async function buatPesanan(meja_id: number, cart: CartItem[]) {
       status_pesanan: "DIPROSES", // Langsung masuk dapur
       detail_pesanan: {
         create: cart.map(item => ({
-          menu_id: item.id_menu,
+          menu_id: typeof item.id_menu === "string" ? parseInt(item.id_menu) : item.id_menu,
           jml_pesanan: item.qty,
           subtotal: item.harga * item.qty
         }))
@@ -56,7 +56,7 @@ export async function buatPesanan(meja_id: number, cart: CartItem[]) {
   // Kurangi stok menu
   for (const item of cart) {
     await db.menu.update({
-      where: { id_menu: item.id_menu },
+      where: { id_menu: typeof item.id_menu === "string" ? parseInt(item.id_menu) : item.id_menu },
       data: { stok: { decrement: item.qty } }
     });
   }
@@ -78,14 +78,14 @@ export async function getPesananUntukDibayar(id_pesanan: number) {
 
 export async function prosesPembayaran(
   id_pesanan: number, 
-  user_id: string, 
+  user_id: string | number, 
   metode: "CASH" | "QRIS" | "DEBIT", 
   nominal: number
 ) {
   await db.pembayaran.create({
     data: {
       pesanan_id: id_pesanan,
-      user_id,
+      user_id: typeof user_id === "string" ? parseInt(user_id) : user_id,
       metode_pembayaran: metode,
       nominal
     }
