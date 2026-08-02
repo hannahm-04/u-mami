@@ -84,7 +84,7 @@ export default function LaporanKeuangan() {
               <Tooltip 
                 cursor={{ fill: '#f3f7fb' }}
                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                formatter={(value: number) => [`Rp ${value.toLocaleString("id-ID")}`, "Pendapatan"]}
+                formatter={(value: any) => [`Rp ${Number(value || 0).toLocaleString("id-ID")}`, "Pendapatan"]}
               />
               <Bar dataKey="total" fill="#8CB9F1" radius={[4, 4, 0, 0]} barSize={40} />
             </BarChart>

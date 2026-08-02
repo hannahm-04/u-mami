@@ -4,7 +4,7 @@ import db from "@/lib/db";
 export async function GET() {
   try {
     const pesanan = await db.pesanan.findMany({
-      where: { status_pesanan: "SIAP_DIANTAR" },
+      where: { status_pesanan: "TERSAJI" },
       include: { meja: true, detail_pesanan: { include: { menu: true } } },
       orderBy: { waktu_pesan: "asc" }
     });

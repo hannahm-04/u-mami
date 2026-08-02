@@ -38,7 +38,7 @@ export default function MejaPage() {
     fetchMeja();
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
     if (confirm("Apakah anda yakin ingin menghapus meja ini?")) {
       await deleteMeja(id);
       fetchMeja();

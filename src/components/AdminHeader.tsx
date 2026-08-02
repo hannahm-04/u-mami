@@ -24,7 +24,7 @@ export default function AdminHeader() {
           </div>
           {session?.user && (
             <div className="bg-white px-3 py-0.5 mt-1 rounded text-xs font-bold text-[#387bd5] shadow-sm">
-              {session.user.nama_lengkap || session.user.username}
+              {session.user.name || (session.user as any).username}
             </div>
           )}
         </div>
