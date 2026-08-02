@@ -142,3 +142,21 @@ export async function deleteStaf(id: string) {
   await db.pengguna.delete({ where: { id_user: id } });
   revalidatePath("/admin/staf");
 }
+
+export async function updateStaf(id: string, formData: FormData) {
+  const username = formData.get("username") as string;
+  const nama_lengkap = formData.get("nama_lengkap") as string;
+  const role = formData.get("role") as any;
+  const password = formData.get("password") as string;
+
+  const dataToUpdate: any = { username, nama_lengkap, role };
+  if (password && password.trim() !== "") {
+    dataToUpdate.password = password;
+  }
+
+  await db.pengguna.update({
+    where: { id_user: id },
+    data: dataToUpdate,
+  });
+  revalidatePath("/admin/staf");
+}

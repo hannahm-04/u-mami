@@ -69,14 +69,14 @@ export default function NotificationKoki() {
         <div className="w-full bg-[#a8ccf8] rounded-xl overflow-hidden flex flex-col">
           {/* Header */}
           <div className="bg-[#6b9ce8] p-4 flex justify-between items-center text-white">
-            <span className="font-bold text-xl tracking-wide">P-{pesananBaru.id_pesanan.substring(pesananBaru.id_pesanan.length - 3)}</span>
+            <span className="font-bold text-xl tracking-wide">P-{pesananBaru.id_pesanan.substring(0, 3).toUpperCase()}</span>
             <span className="font-semibold text-sm">{timeString}</span>
           </div>
 
           {/* Body */}
           <div className="p-6 flex flex-col gap-4 text-[#387bd5]">
             <p className="font-bold text-lg">
-              No Meja : {pesananBaru.meja.no_meja}
+              No Meja : M{String(pesananBaru.meja.no_meja).padStart(2, '0')}
             </p>
             <div>
               <p className="font-bold text-lg mb-1">Pesanan:</p>

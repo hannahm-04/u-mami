@@ -69,11 +69,11 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
           </div>
           <div className="flex">
             <span className="w-48">No. Pesanan</span>
-            <div className="bg-white px-4 py-1 rounded-full flex-1 truncate">{pesanan.id_pesanan}</div>
+            <div className="bg-white px-4 py-1 rounded-full flex-1 truncate">P-{pesanan.id_pesanan.substring(0,3).toUpperCase()}</div>
           </div>
           <div className="flex">
             <span className="w-48">No. Meja</span>
-            <div className="bg-white px-4 py-1 rounded-full flex-1">Meja {pesanan.meja.no_meja}</div>
+            <div className="bg-white px-4 py-1 rounded-full flex-1">Meja M{String(pesanan.meja.no_meja).padStart(2, '0')}</div>
           </div>
           
           <div className="mt-4">
@@ -149,11 +149,11 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
               <div className="space-y-2 text-sm md:text-base font-semibold">
                 <div className="flex justify-between">
                   <span>No Pesanan</span>
-                  <span>{pesanan.id_pesanan}</span>
+                  <span>P-{pesanan.id_pesanan.substring(0,3).toUpperCase()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>No Meja</span>
-                  <span>{pesanan.meja.no_meja}</span>
+                  <span>M{String(pesanan.meja.no_meja).padStart(2, '0')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Waktu Pemesanan</span>
