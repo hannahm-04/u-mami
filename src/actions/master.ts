@@ -2,6 +2,7 @@
 
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { v2 as cloudinary } from "cloudinary";
 
 // --- KATEGORI ---
 export async function getKategori() {
@@ -30,13 +31,55 @@ export async function createMenu(formData: FormData) {
   const nama = formData.get("nama") as string;
   const harga = parseInt(formData.get("harga") as string);
   const deskripsi = formData.get("deskripsi") as string || "";
-  const image_url = formData.get("image_url") as string || "";
   const id_kategori = formData.get("id_kategori") as string;
+  
+  let image_url = "";
+  const imageFile = formData.get("image_file") as File;
+
+  if (imageFile && imageFile.size > 0) {
+    const arrayBuffer = await imageFile.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const base64Image = `data:${imageFile.type};base64,${buffer.toString("base64")}`;
+
+    const uploadResponse = await cloudinary.uploader.upload(base64Image, {
+      folder: "umami_menus",
+    });
+    image_url = uploadResponse.secure_url;
+  }
   
   await db.menu.create({
     data: { nama_menu: nama, harga, deskripsi, image_url, kategori_id: id_kategori },
   });
   revalidatePath("/admin/menu");
+  revalidatePath("/pemilik/kelola-menu");
+}
+
+export async function updateMenu(id_menu: string, formData: FormData) {
+  const nama = formData.get("nama") as string;
+  const harga = parseInt(formData.get("harga") as string);
+  const deskripsi = formData.get("deskripsi") as string || "";
+  const id_kategori = formData.get("id_kategori") as string;
+  
+  const dataToUpdate: any = { nama_menu: nama, harga, deskripsi, kategori_id: id_kategori };
+  
+  const imageFile = formData.get("image_file") as File;
+  if (imageFile && imageFile.size > 0) {
+    const arrayBuffer = await imageFile.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const base64Image = `data:${imageFile.type};base64,${buffer.toString("base64")}`;
+
+    const uploadResponse = await cloudinary.uploader.upload(base64Image, {
+      folder: "umami_menus",
+    });
+    dataToUpdate.image_url = uploadResponse.secure_url;
+  }
+  
+  await db.menu.update({
+    where: { id_menu },
+    data: dataToUpdate,
+  });
+  revalidatePath("/admin/menu");
+  revalidatePath("/pemilik/kelola-menu");
 }
 
 export async function toggleStokMenu(id_menu: string, current_status: string) {
@@ -46,11 +89,13 @@ export async function toggleStokMenu(id_menu: string, current_status: string) {
     data: { status_stok: newStatus as any },
   });
   revalidatePath("/admin/menu");
+  revalidatePath("/pemilik/kelola-menu");
 }
 
 export async function deleteMenu(id: string) {
   await db.menu.delete({ where: { id_menu: id } });
   revalidatePath("/admin/menu");
+  revalidatePath("/pemilik/kelola-menu");
 }
 
 // --- MEJA ---
