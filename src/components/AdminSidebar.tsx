@@ -62,7 +62,7 @@ export default function AdminSidebar() {
           <span className="text-lg">BERANDA</span>
         </Link>
         <button
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={async () => { await signOut({ redirect: false }); window.location.href = "/"; }}
           className="flex items-center gap-2 text-white font-bold hover:opacity-80 transition px-8"
         >
           <LogOut size={24} />
