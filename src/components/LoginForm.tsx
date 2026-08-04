@@ -44,7 +44,7 @@ export default function LoginForm() {
           {error}
         </div>
       )}
-      
+
       <div className="flex flex-col gap-1">
         <label className="text-[#2b64b1] text-sm font-bold tracking-wide px-1">
           Username
@@ -79,12 +79,6 @@ export default function LoginForm() {
         >
           {isLoading ? "Loading..." : "Log In"}
         </button>
-      </div>
-
-      <div className="text-center mt-6 text-white text-xs">
-        <span className="opacity-80">Forgot password? </span>
-        <span className="font-semibold">Or</span>
-        <span className="opacity-80"> Sign Up</span>
       </div>
     </form>
   );
