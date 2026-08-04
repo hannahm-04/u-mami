@@ -23,7 +23,7 @@ export default async function PengantaranPesananPage() {
             <div className="bg-[#a8ccf8] p-6 flex-1 flex flex-col">
               <div className="mb-6 flex-1">
                 <p className="text-[#387bd5] font-bold text-lg mb-2">
-                  No Meja : <span className="text-[#387bd5]">M{String(p.meja.no_meja).padStart(2, '0')}</span>
+                  No Meja : <span className="text-[#387bd5]">{p.meja.no_meja}</span>
                 </p>
                 <p className="text-[#387bd5] font-bold text-lg mb-2">
                   Pesanan:

@@ -35,7 +35,7 @@ export default function NotificationPelayan() {
           {/* Body */}
           <div className="p-6 flex flex-col gap-4 text-[#387bd5]">
             <p className="font-bold text-lg">
-              No Meja : M{String(pesananBaru.meja.no_meja).padStart(2, '0')}
+              No Meja : {pesananBaru.meja.no_meja}
             </p>
             <div>
               <p className="font-bold text-lg mb-1">Pesanan:</p>

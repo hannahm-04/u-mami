@@ -15,7 +15,7 @@ export default async function DaftarAntreanPage() {
               type="text" 
               name="nama" 
               required 
-              className="w-48 px-3 py-1.5 rounded-lg border-2 border-[#387bd5] text-gray-900 focus:ring-2 focus:ring-[#387bd5] outline-none"
+              className="w-48 px-3 py-1.5 rounded-lg border-2 border-[#387bd5] bg-white text-gray-900 focus:ring-2 focus:ring-[#387bd5] outline-none"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -25,7 +25,7 @@ export default async function DaftarAntreanPage() {
               name="jumlahKursi" 
               required 
               min={1}
-              className="w-20 px-3 py-1.5 rounded-lg border-2 border-[#387bd5] text-gray-900 focus:ring-2 focus:ring-[#387bd5] outline-none"
+              className="w-20 px-3 py-1.5 rounded-lg border-2 border-[#387bd5] bg-white text-gray-900 focus:ring-2 focus:ring-[#387bd5] outline-none"
             />
           </div>
           <button 

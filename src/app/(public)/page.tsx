@@ -11,7 +11,7 @@ export default async function LandingPage() {
       <section className="w-full max-w-6xl mx-auto px-4 py-12 md:py-20 flex flex-col-reverse md:flex-row items-center gap-8">
         <div className="flex-1 bg-[#8CB9F1] rounded-[24px] p-8 md:p-12 text-white shadow-md relative overflow-hidden h-[300px] md:h-[400px] flex flex-col justify-center">
           <h1 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
-            Selamat Datang di U-MAMI 🐰✨
+            Selamat Datang di U-MAMI🐰✨
           </h1>
           <p className="text-sm md:text-base font-medium mb-8 max-w-md opacity-90 leading-relaxed">
             Nikmati kelezatan rasa umami sejati di setiap gigitan. Dibuat dengan bahan segar, resep andalan, dan sentuhan kehangatan yang bikin kamu selalu ingin kembali!
@@ -28,7 +28,7 @@ export default async function LandingPage() {
         <div className="flex-1 w-full h-[300px] md:h-[400px] relative rounded-[24px] overflow-hidden shadow-md">
           {/* Using standard img for external URLs to avoid next.config.js issues */}
           <img
-            src="https://images.unsplash.com/photo-1490818387583-1b5ba4597b8f?w=800&q=80"
+            src="/hero-food.jpg"
             alt="Delicious Food"
             className="w-full h-full object-cover"
           />
@@ -41,7 +41,7 @@ export default async function LandingPage() {
           <h2 className="text-3xl md:text-4xl font-extrabold text-[#387bd5] mb-12 uppercase tracking-wide">
             OUR BEST SELLER THIS MONTH
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {topMenus.map((menu) => (
               <div key={menu.id_menu} className="flex flex-col items-center">
@@ -59,7 +59,7 @@ export default async function LandingPage() {
                 <h3 className="text-[#387bd5] font-bold text-xl">{menu.nama_menu}</h3>
               </div>
             ))}
-            
+
             {/* Fill empty spots if less than 3 */}
             {Array.from({ length: Math.max(0, 3 - topMenus.length) }).map((_, i) => (
               <div key={`empty-${i}`} className="flex flex-col items-center">

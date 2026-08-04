@@ -5,15 +5,15 @@ import { useSession } from "next-auth/react";
 
 export default function PemilikHeader() {
   const { data: session } = useSession();
-  
+
   return (
     <header className="h-24 bg-[#c5e0fc] flex items-center justify-between px-8 shadow-sm relative z-0">
       {/* Spacer to push title to center roughly, or just absolute centering */}
       <div className="flex-1"></div>
-      
+
       <div className="absolute left-1/2 -translate-x-1/2">
         <h1 className="text-[#387bd5] text-2xl md:text-3xl font-extrabold tracking-wide">
-          Halo! Semangat bertugas hari ini! 🐰✨
+          Semangat bertugas hari ini!🐰✨
         </h1>
       </div>
 
