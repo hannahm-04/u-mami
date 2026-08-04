@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# U-Mami - Sistem Manajemen Restoran 🐰✨
 
-## Getting Started
+U-Mami adalah aplikasi sistem manajemen restoran komprehensif (Point of Sales & Management) yang dibangun menggunakan Next.js, Prisma, dan MySQL. Aplikasi ini dirancang untuk memudahkan operasional restoran sehari-hari dengan memisahkan peran dan tanggung jawab setiap posisi.
 
-First, run the development server:
+## 🚀 Fitur Utama & Peran Pengguna (Actors)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Sistem ini memiliki 5 aktor utama dengan *dashboard* dan *tools* yang berbeda:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Admin**
+   - Mengelola data akun pengguna.
+   - Mengelola kategori dan menu restoran.
+   - Mengelola daftar meja (Nomor, Nama, Kapasitas).
+2. **Pemilik (Owner)**
+   - Melihat Laporan Keuangan (Harian, Bulanan, Tahunan).
+   - Melihat statistik Menu Terlaris.
+   - Memonitor operasional secara umum.
+3. **Kasir**
+   - Melayani pesanan langsung (Point of Sales).
+   - Memproses pembayaran (tunai/non-tunai) dan mencetak struk.
+   - Melihat riwayat transaksi (Order History).
+4. **Pelayan**
+   - Memasukkan data antrean pelanggan ke sistem.
+   - Memantau status ketersediaan meja.
+   - Mengonfirmasi pengantaran makanan/minuman yang telah siap.
+5. **Koki**
+   - Melihat daftar pesanan masuk (*kitchen display*).
+   - Mengubah status pesanan ("Sedang Dimasak" -> "Selesai").
+   - Memantau dan mengubah stok menu makanan/minuman harian.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Teknologi yang Digunakan
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:** Next.js (App Router), React, Tailwind CSS, Lucide Icons.
+- **Backend:** Next.js Server Actions / API Routes, Prisma ORM.
+- **Database:** MySQL.
+- **Autentikasi:** NextAuth.js.
 
-## Learn More
+## 📦 Panduan Instalasi & Menjalankan Aplikasi
 
-To learn more about Next.js, take a look at the following resources:
+1. **Persiapan Awal**
+   Pastikan Anda sudah menginstal Node.js dan XAMPP/MySQL di komputer Anda. Masuk ke folder proyek ini melalui terminal.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Instal Dependensi**
+   `ash
+   npm install
+   `
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Konfigurasi Environment**
+   Buat file \.env\ (jika belum ada) dan pastikan string koneksinya tepat mengarah ke database MySQL Anda:
+   `env
+   DATABASE_URL="mysql://root:@localhost:3306/umami_db"
+   `
 
-## Deploy on Vercel
+4. **Sinkronisasi Database (Prisma)**
+   Gunakan perintah berikut untuk menyiapkan *schema database* secara otomatis:
+   `ash
+   npx prisma db push
+   `
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Jalankan Development Server**
+   `ash
+   npm run dev
+   `
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+6. **Buka Aplikasi**
+   Buka peramban (*browser*) dan arahkan ke [http://localhost:3000](http://localhost:3000).
+   Untuk *login*, gunakan akun pengguna yang telah terdaftar di database.
+
+## 📜 Tim Pengembang
+Proyek Tugas Besar Rekayasa Perangkat Lunak 1:
+- Siti Marhamah
+- Siti Nurhaliza
+- Hanna Hanifa Maulidina
+- Wa Ode Calisyah Anastasya
