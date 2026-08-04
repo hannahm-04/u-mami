@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { getMenuTerlarisPublik } from "@/actions/public";
 
+export const dynamic = "force-dynamic";
+
 export default async function LandingPage() {
   const topMenus = await getMenuTerlarisPublik();
 

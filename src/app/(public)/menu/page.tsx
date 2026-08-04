@@ -1,6 +1,8 @@
 import { getMenu, getKategori } from "@/actions/master";
 import MenuContent from "./MenuContent";
 
+export const dynamic = "force-dynamic";
+
 export default async function MenuPublikPage() {
   const [menus, kategoris] = await Promise.all([
     getMenu(),

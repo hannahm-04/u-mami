@@ -61,7 +61,7 @@ export default function KokiSidebar() {
           <span className="text-lg">BERANDA</span>
         </Link>
         <button
-          onClick={() => signOut({ callbackUrl: "/login" })}
+          onClick={() => signOut({ callbackUrl: "/" })}
           className="flex items-center gap-2 text-white font-bold hover:opacity-80 transition px-8"
         >
           <LogOut size={24} />
