@@ -12,16 +12,23 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
   const [metode, setMetode] = useState<"CASH" | "QRIS" | "DEBIT">("CASH");
   const [isLoading, setIsLoading] = useState(false);
   const [showStruk, setShowStruk] = useState(false);
+  const [uangCashStr, setUangCashStr] = useState<string>("");
   const receiptRef = useRef<HTMLDivElement>(null);
 
   const pajak = pesanan.total_harga * 0.1; // Asumsi pajak 10%
   const totalTagihan = pesanan.total_harga + pajak;
+  
+  const uangCash = parseInt(uangCashStr.replace(/\D/g, "")) || 0;
+  const kembalian = metode === "CASH" ? Math.max(0, uangCash - totalTagihan) : 0;
+  const nominalBayar = metode === "CASH" ? uangCash : totalTagihan;
+  
+  const isBayarDisabled = isLoading || (metode === "CASH" && uangCash < totalTagihan);
 
   const handleProses = async () => {
     if (!session?.user?.id) return alert("Sesi login tidak ditemukan. Harap relogin.");
     setIsLoading(true);
     try {
-      await prosesPembayaran(pesanan.id_pesanan, session.user.id, metode, totalTagihan);
+      await prosesPembayaran(pesanan.id_pesanan, session.user.id, metode, nominalBayar);
       setShowStruk(true); // Show receipt modal instead of redirecting immediately
     } catch (error) {
       console.error(error);
@@ -73,7 +80,7 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
           </div>
           <div className="flex">
             <span className="w-48">No. Meja</span>
-            <div className="bg-white px-4 py-1 rounded-full flex-1">Meja M{String(pesanan.meja.no_meja).padStart(2, '0')}</div>
+            <div className="bg-white px-4 py-1 rounded-full flex-1">Meja {pesanan.meja.no_meja}</div>
           </div>
           
           <div className="mt-4">
@@ -116,12 +123,46 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
                 </button>
               ))}
             </div>
+            
+
+            {metode === "CASH" && (
+              <>
+                <div className="flex justify-between items-center mt-6 text-[#387bd5] font-bold">
+                  <span>Nominal Tunai</span>
+                  <div className="bg-white px-4 py-1 rounded-full w-40 text-left flex items-center">
+                    <span className="mr-1">Rp</span>
+                    <input 
+                      type="text" 
+                      value={uangCashStr}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, "");
+                        if (val) {
+                          setUangCashStr(parseInt(val).toLocaleString("id-ID"));
+                        } else {
+                          setUangCashStr("");
+                        }
+                      }}
+                      className="w-full outline-none bg-transparent" 
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+                {uangCash > 0 && (
+                  <div className="flex justify-between items-center mt-2 text-[#2b64b1] font-bold">
+                    <span>Kembalian</span>
+                    <div className="bg-white px-4 py-1 rounded-full w-40 text-left">
+                      Rp {kembalian.toLocaleString("id-ID")}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </div>
 
           <div className="mt-10 flex justify-center">
             <button 
               onClick={handleProses}
-              disabled={isLoading}
+              disabled={isBayarDisabled}
               className="bg-white text-[#387bd5] hover:bg-gray-100 transition px-16 py-3 rounded-xl font-bold text-xl shadow-lg disabled:opacity-50"
             >
               {isLoading ? "Memproses..." : "Proses"}
@@ -153,7 +194,7 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
                 </div>
                 <div className="flex justify-between">
                   <span>No Meja</span>
-                  <span>M{String(pesanan.meja.no_meja).padStart(2, '0')}</span>
+                  <span>{pesanan.meja.no_meja}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Waktu Pemesanan</span>
@@ -195,11 +236,11 @@ export default function PembayaranClient({ pesanan }: { pesanan: any }) {
                   </div>
                   <div className="flex justify-between mt-4">
                     <span>Metode ({metode})</span>
-                    <span>Rp {totalTagihan.toLocaleString("id-ID")}</span>
+                    <span>Rp {nominalBayar.toLocaleString("id-ID")}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Kembali</span>
-                    <span>Rp 0</span>
+                    <span>Rp {kembalian.toLocaleString("id-ID")}</span>
                   </div>
                 </div>
 

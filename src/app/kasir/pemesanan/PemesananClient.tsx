@@ -53,6 +53,19 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
     });
   };
 
+  const handleRemove = (menu: Menu) => {
+    setCart(prev => {
+      const existing = prev.find(item => item.id_menu === menu.id_menu);
+      if (!existing) return prev;
+      if (existing.qty === 1) {
+        return prev.filter(item => item.id_menu !== menu.id_menu);
+      }
+      return prev.map(item => 
+        item.id_menu === menu.id_menu ? { ...item, qty: item.qty - 1 } : item
+      );
+    });
+  };
+
   const handleCheckout = async () => {
     if (!selectedMeja) return alert("Pilih meja terlebih dahulu!");
     setIsLoading(true);
@@ -109,13 +122,23 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
                   <div className="w-full h-full bg-blue-100 flex items-center justify-center text-blue-300">No Image</div>
                 )}
                 
-                <button 
-                  onClick={() => handleAdd(menu)}
-                  disabled={isHabis}
-                  className="absolute bottom-2 right-2 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-800 font-bold text-2xl shadow-lg hover:bg-gray-100 transition"
-                >
-                  +
-                </button>
+                <div className="absolute bottom-2 right-2 flex gap-2">
+                  {qtyInCart > 0 && (
+                    <button 
+                      onClick={() => handleRemove(menu)}
+                      className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-red-500 font-bold text-2xl shadow-lg hover:bg-gray-100 transition"
+                    >
+                      -
+                    </button>
+                  )}
+                  <button 
+                    onClick={() => handleAdd(menu)}
+                    disabled={isHabis || qtyInCart >= menu.stok}
+                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-800 font-bold text-2xl shadow-lg hover:bg-gray-100 transition disabled:opacity-50"
+                  >
+                    +
+                  </button>
+                </div>
                 {qtyInCart > 0 && (
                   <span className="absolute top-2 right-2 bg-[#387bd5] text-white font-bold px-2 py-1 rounded-lg text-sm">
                     {qtyInCart}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMenu, updateStokMenu } from "@/actions/master";
+import { getMenu, updateStokMenu, setStokMenu } from "@/actions/master";
 
 export default function DaftarStokPage() {
   const [menuList, setMenuList] = useState<any[]>([]);
@@ -17,11 +17,20 @@ export default function DaftarStokPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleUpdate = async (id: string, change: number) => {
+  const handleUpdate = async (id: number, change: number) => {
     // Optimistic UI update
     setMenuList(prev => prev.map(m => m.id_menu === id ? { ...m, stok: Math.max(0, m.stok + change) } : m));
     await updateStokMenu(id, change);
     fetchMenu();
+  };
+
+  const handleSetStok = async (id: number, newStokStr: string) => {
+    const newStok = parseInt(newStokStr);
+    if (isNaN(newStok) || newStok < 0) return;
+    
+    // Optimistic UI
+    setMenuList(prev => prev.map(m => m.id_menu === id ? { ...m, stok: newStok } : m));
+    await setStokMenu(id, newStok);
   };
 
   return (
@@ -59,6 +68,25 @@ export default function DaftarStokPage() {
                     >
                       -
                     </button>
+                    <input 
+                      type="number"
+                      value={m.stok}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value);
+                        if (!isNaN(val) && val >= 0) {
+                          handleSetStok(m.id_menu, e.target.value);
+                        } else if (e.target.value === "") {
+                          // Allow empty string temporarily while typing
+                          setMenuList(prev => prev.map(menu => menu.id_menu === m.id_menu ? { ...menu, stok: "" } : menu));
+                        }
+                      }}
+                      onBlur={(e) => {
+                         if (e.target.value === "") {
+                           handleSetStok(m.id_menu, "0");
+                         }
+                      }}
+                      className="w-16 text-center font-bold border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
                     <button 
                       onClick={() => handleUpdate(m.id_menu, 1)}
                       className="bg-blue-50 text-blue-600 hover:bg-blue-100 font-bold px-4 py-1.5 rounded-lg border border-blue-200 transition"

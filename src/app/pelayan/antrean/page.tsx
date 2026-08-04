@@ -41,10 +41,9 @@ export default async function DaftarAntreanPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 px-4">
         {antrean.map((a, index) => (
           <div key={a.id_antrean} className="rounded-xl overflow-hidden shadow-sm flex flex-col h-full">
-            {/* Header Kartu */}
             <div className="bg-[#6b9ce8] p-3">
               <h3 className="text-white font-bold text-xl tracking-wide">
-                A-{String(index + 1).padStart(3, '0')}
+                A-{String(a.id_antrean).padStart(3, '0')}
               </h3>
             </div>
             {/* Body Kartu */}

@@ -92,6 +92,16 @@ export async function updateStokMenu(id_menu: number, change: number) {
   revalidatePath("/koki/stok");
 }
 
+export async function setStokMenu(id_menu: number, newStok: number) {
+  await db.menu.update({
+    where: { id_menu },
+    data: { stok: newStok },
+  });
+  revalidatePath("/admin/menu");
+  revalidatePath("/pemilik/kelola-menu");
+  revalidatePath("/koki/stok");
+}
+
 export async function deleteMenu(id: number) {
   await db.menu.delete({ where: { id_menu: id } });
   revalidatePath("/admin/menu");
