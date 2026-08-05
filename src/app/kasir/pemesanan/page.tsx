@@ -1,6 +1,8 @@
 import { getMenuLengkap, getMejaTersedia } from "@/actions/kasir";
 import PemesananClient from "./PemesananClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function PemesananPage() {
   const menus = await getMenuLengkap();
   const mejaList = await getMejaTersedia();
