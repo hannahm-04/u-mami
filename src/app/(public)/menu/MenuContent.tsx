@@ -44,8 +44,8 @@ export default function MenuContent({ menus, kategoris }: { menus: any[], katego
                   src={
                     kategori.nama_kategori.toLowerCase().includes("minum") 
                       ? "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&q=80"
-                      : kategori.nama_kategori.toLowerCase().includes("dessert")
-                      ? "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&q=80"
+                      : (kategori.nama_kategori.toLowerCase().includes("dessert") || kategori.nama_kategori.toLowerCase().includes("penutup"))
+                      ? "/hidangan-penutup.jpg"
                       : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80"
                   }
                   alt={kategori.nama_kategori}

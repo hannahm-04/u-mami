@@ -3,6 +3,34 @@
 import { useEffect, useState } from "react";
 import { getMenu, updateStokMenu, setStokMenu } from "@/actions/master";
 
+function StockInput({ initialStok, onSetStok }: { initialStok: number, onSetStok: (val: number) => void }) {
+  const [val, setVal] = useState(initialStok.toString());
+  const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    if (!isFocused) setVal(initialStok.toString());
+  }, [initialStok, isFocused]);
+
+  return (
+    <input 
+      type="number"
+      value={isFocused ? val : initialStok}
+      onFocus={() => setIsFocused(true)}
+      onChange={(e) => setVal(e.target.value)}
+      onBlur={() => {
+        setIsFocused(false);
+        const num = parseInt(val);
+        if (!isNaN(num) && num >= 0) {
+          onSetStok(num);
+        } else {
+          setVal(initialStok.toString());
+        }
+      }}
+      className="w-16 text-center font-bold border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+    />
+  );
+}
+
 export default function DaftarStokPage() {
   const [menuList, setMenuList] = useState<any[]>([]);
 
@@ -21,11 +49,9 @@ export default function DaftarStokPage() {
     // Optimistic UI update
     setMenuList(prev => prev.map(m => m.id_menu === id ? { ...m, stok: Math.max(0, m.stok + change) } : m));
     await updateStokMenu(id, change);
-    fetchMenu();
   };
 
-  const handleSetStok = async (id: number, newStokStr: string) => {
-    const newStok = parseInt(newStokStr);
+  const handleSetStok = async (id: number, newStok: number) => {
     if (isNaN(newStok) || newStok < 0) return;
     
     // Optimistic UI
@@ -68,24 +94,9 @@ export default function DaftarStokPage() {
                     >
                       -
                     </button>
-                    <input 
-                      type="number"
-                      value={m.stok}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value);
-                        if (!isNaN(val) && val >= 0) {
-                          handleSetStok(m.id_menu, e.target.value);
-                        } else if (e.target.value === "") {
-                          // Allow empty string temporarily while typing
-                          setMenuList(prev => prev.map(menu => menu.id_menu === m.id_menu ? { ...menu, stok: "" } : menu));
-                        }
-                      }}
-                      onBlur={(e) => {
-                         if (e.target.value === "") {
-                           handleSetStok(m.id_menu, "0");
-                         }
-                      }}
-                      className="w-16 text-center font-bold border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    <StockInput 
+                      initialStok={m.stok}
+                      onSetStok={(val) => handleSetStok(m.id_menu, val)}
                     />
                     <button 
                       onClick={() => handleUpdate(m.id_menu, 1)}
