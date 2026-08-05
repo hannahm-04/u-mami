@@ -88,8 +88,14 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
           onClick={() => setSelectedKategori("ALL")}
           className={`flex flex-col items-center gap-2 font-bold ${selectedKategori === "ALL" ? "text-[#387bd5]" : "text-gray-400"}`}
         >
-          <div className={`w-20 h-20 rounded-full border-4 flex items-center justify-center text-sm ${selectedKategori === "ALL" ? "border-[#387bd5] bg-blue-50" : "border-gray-200"}`}>
-            Semua
+          <div className={`w-20 h-20 md:w-24 md:h-24 rounded-full border-4 ${selectedKategori === "ALL" ? "border-[#387bd5]" : "border-gray-200"} overflow-hidden shadow-sm transition-transform bg-white p-1`}>
+            <div className="w-full h-full relative rounded-full overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80"
+                alt="Semua"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
           Semua
         </button>
@@ -99,8 +105,20 @@ export default function PemesananClient({ menus, mejaList }: { menus: Menu[], me
             onClick={() => setSelectedKategori(cat)}
             className={`flex flex-col items-center gap-2 font-bold ${selectedKategori === cat ? "text-[#387bd5]" : "text-gray-400"}`}
           >
-            <div className={`w-20 h-20 rounded-full border-4 flex items-center justify-center text-xs text-center p-2 ${selectedKategori === cat ? "border-[#387bd5] bg-blue-50" : "border-gray-200"}`}>
-              {cat}
+            <div className={`w-20 h-20 md:w-24 md:h-24 rounded-full border-4 ${selectedKategori === cat ? "border-[#387bd5]" : "border-gray-200"} overflow-hidden shadow-sm transition-transform bg-white p-1`}>
+              <div className="w-full h-full relative rounded-full overflow-hidden">
+                <img
+                  src={
+                    cat.toLowerCase().includes("minum") 
+                      ? "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&q=80"
+                      : (cat.toLowerCase().includes("dessert") || cat.toLowerCase().includes("penutup"))
+                      ? "/hidangan-penutup.jpg"
+                      : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80"
+                  }
+                  alt={cat}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
             {cat}
           </button>
